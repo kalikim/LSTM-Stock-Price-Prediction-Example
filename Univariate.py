@@ -9,7 +9,8 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import MinMaxScaler
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, LSTM
-from keras.optimizers import Adam
+from keras.optimizers import adam_v2
+
 
 scaler = MinMaxScaler(feature_range=(0, 1))
 
@@ -49,7 +50,7 @@ model.add(LSTM(units=100,input_shape=(x_train.shape[1],1),return_sequences=True)
 model.add(LSTM(units=100))
 model.add(Dropout(0.4))
 model.add(Dense(1))
-ADAM=keras.optimizers.Adam(0.0005, beta_1=0.9, beta_2=0.999, amsgrad=False)
+ADAM=adam_v2.Adam(0.0005, beta_1=0.9, beta_2=0.999, amsgrad=False)
 model.compile(loss='mean_squared_error', optimizer=ADAM)
 history = model.fit(x_train,y_train,epochs=50,batch_size=72,validation_data=(x_test,y_test),verbose=1,shuffle=False)
 plt.plot(history.history['loss'], label='train')
